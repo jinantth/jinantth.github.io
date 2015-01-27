@@ -1,72 +1,63 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>{% if page.title %}{{ page.title }} &#8211; {% endif %}{{ site.title }}</title>
+<meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+{% if page.tags %}<meta name="keywords" content="{{ page.tags | join: ', ' }}">{% endif %}
 
-  <!-- Standard Meta -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+{% if site.owner.twitter %}<!-- Twitter Cards -->
+{% if page.image.feature %}<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{{ site.url }}/images/{{ page.image.feature }}">
+{% else %}<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="{% if page.image.thumb %}{{ site.url }}/images/{{ page.image.thumb }}{% else %}{{ site.url }}/images/{{ site.logo }}{% endif %}">{% endif %}
+<meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+<meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+<meta name="twitter:creator" content="@{{ site.owner.twitter }}">{% endif %}
 
-  <!-- Refer HTML5BP and https://developers.google.com/speed/docs/insights/ConfigureViewport -->
-  <meta name=viewport content="width=device-width, initial-scale=1">
-  
-  <!-- Site Properities -->
-  {% if page.title == "Home" %}
-    {% capture title_tag %}{{ site.tagline }}{% endcapture %}
-  {% else %}
-    {% capture title_tag %}{{ page.title }}{% endcapture %}
-  {% endif %}
-  
-  <title>{{ title_tag }} &middot; {{ site.title }}</title>
-  <link rel="canonical" href="{{ page.url | prepend: site.url }}">
-  
-  <!-- Open Graph. Refer https://developers.facebook.com/docs/web/tutorials/scrumptious/open-graph-object -->
-  {% if site.facebook %}
-  <meta property="fb:app_id" content="{{ site.facebook_app }}">
-  {% endif %}
-  
-  <meta property="og:locale" content="en_US">
-  <meta property="og:url" content="{{ page.url | prepend: site.url }}">
-  <meta property="og:title" content="{{ title_tag }}">
-  <meta property="og:site_name" content="{{ site.title }}">
-  <meta property="og:description" content="{% if page.layout != 'post' %}{{ site.description | strip_newlines }}{% else %}{{ page.excerpt | strip_html | strip_newlines }}{% endif %}">
-  <meta property="og:image" content="{% if page.image %}{{ page.image | prepend: site.url }}{% else %}{{ site.default_image | prepend: site.url }}{% endif %}">
-  <meta property="og:image:width" content="640">
-  <meta property="og:image:height" content="300">
-  
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@open_theme">
-  <meta name="twitter:creator" content="@{{ site.twitter_username }}">
-  
-  {% if page.layout == 'post' %}
-  <meta property="og:type" content="article" />
-  {% else %}
-  <meta property="og:type" content="website" />
-  {% endif %}
-  
-  <meta name="description" content="{% if page.layout != 'post' %}{{ site.description | strip_newlines }}{% else %}{{ page.excerpt | strip_html | strip_newlines }}{% endif %}">
-  <meta name="keywords" content="{% if page.layout != 'post' %}{{ site.keywords }}{% else %}{{ page.tags | join: ', ' }}, {{ page.categories | join: ', ' }}{% endif %}">
-  
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  
-  <!-- Common Styles -->
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.5.0/semantic.min.css">
-  <link rel="stylesheet" type="text/css" href="/css/main.min.css">
-  <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
-  
-  {% if site.pingdom_rum %}
-  <script>
-  var _prum = [['id', '{{ site.pingdom_rum }}'],
-               ['mark', 'firstbyte', (new Date()).getTime()]];
-  (function() {
-      var s = document.getElementsByTagName('script')[0]
-        , p = document.createElement('script');
-      p.async = 'async';
-      p.src = '//rum-static.pingdom.net/prum.min.js';
-      s.parentNode.insertBefore(p, s);
-  })();
-  </script>
-  {% endif %}
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+<meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:site_name" content="{{ site.title }}">
+
+{% if site.google_verify %}<meta name="google-site-verification" content="{{ site.google_verify }}">{% endif %}
+{% if site.bing_verify %}<meta name="msvalidate.01" content="{{ site.bing_verify }}">{% endif %}
+
+{% capture canonical %}{{ site.url }}{% if site.permalink contains '.html' %}{{ page.url }}{% else %}{{ page.url | remove:'index.html' | strip_slash }}{% endif %}{% endcapture %}
+<link rel="canonical" href="{{ canonical }}">
+<link href="{{ site.url }}/feed.xml" type="application/atom+xml" rel="alternate" title="{{ site.title }} Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="{{ site.url }}/assets/css/main.css">
+<!-- Webfonts -->
+<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="{{ site.url }}/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="{{ site.url }}/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="{{ site.url }}/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="{{ site.url }}/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ site.url }}/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ site.url }}/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ site.url }}/images/apple-touch-icon-144x144-precomposed.png">
+
+{% if page.image.background or site.background %}
+{% capture background %}{% if page.image.background %}{{ page.image.background }}{% else %}{{ site.background }}{% endif %}{% endcapture %}
+{% unless background contains 'http://' or background contains 'https://' %}{% capture background %}{{ site.url }}/images/{{ background }}{% endcapture %}{% endunless %}
+<style type="text/css">body {background-image:url({{ background }});}</style>
+{% endif %}

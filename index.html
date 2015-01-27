@@ -1,181 +1,76 @@
 ---
-layout: landing
-title: Home
+layout: post-index
+title: Latest Posts
+description: "Describe this nonsense."
+tags: [Jekyll, theme, themes, responsive, blog, modern]
+comments: false
+image:
+  feature: abstract-1.jpg
+  credit: dargadgetz
+  creditlink: http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/
 ---
 
-<div class="ui feature vertical segment">
-  <div class="ui centered page grid">
-    <div class="fourteen wide column">
-      <div class="ui three column center aligned stackable divided grid">
-        <div class="column">
-          <div class="ui icon header">
-            <i class="purple github icon"></i>
-            Free GitHub Hosting
-          </div>
-          <p>Free world-class hosting for your website on world's largest open source repository.</p>
-        </div>
-        <div class="column">
-          <div class="ui icon header">
-            <i class="purple code icon"></i>
-            Semantic UI Goodness
-          </div>
-          <p>Create rich, modern user experience with tags as easy as describing design in English.</p>
-        </div>
-        <div class="column">
-          <div class="ui icon header">
-            <i class="purple thumbs up icon"></i>
-            Jekyll Pre-processing 
-          </div>
-          <p>No server or database to maintain. No plugin hassels. Just focus on your content.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% for post in paginator.posts %}
+<article class="hentry">
+  <header>
+    {% if post.image.feature %}
+      <div class="entry-image-index">
+        <a href="{{ site.url }}{{ post.url }}" title="{{ post.title }}"><img src="{{ site.url }}/images/{{ post.image.feature }}" alt="{{ post.title }}"></a>
+      </div><!-- /.entry-image -->
+    {% endif %}
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="{{ post.date | date_to_xmlschema }}"><a href="{{ site.url }}{{ post.url }}">{{ post.date | date: "%B %d, %Y" }}</a></time></span><span class="author vcard"><span class="fn"><a href="{{ site.url }}/about/" title="About {{ site.owner.name }}">{{ site.owner.name }}</a></span></span>
+      {% if site.reading_time %}
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        {% assign readtime = post.content | number_of_words | divided_by:site.words_per_minute %}
+        Reading time ~{% if readtime <= 1 %}1 minute{% else %}{{ readtime }} minutes{% endif %}
+      </span><!-- /.entry-reading-time -->
+      {% endif %}
+    </div><!-- /.entry-meta -->
+    {% if post.link %}
+      <h1 class="entry-title"><a href="{{ site.url }}{{ post.url }}" class="permalink" rel="bookmark" title="{{ post.title }}"><i class="fa fa-bookmark"></i></a> <a href="{{ post.link }}">{{ post.title }}</a></h1>
+    {% else %}
+      <h1 class="entry-title"><a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}" itemprop="url">{{ post.title }}</a></h1>
+    {% endif %}
+  </header>
+  <div class="entry-content">
+    {{ post.content }}
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+{% endfor %}
 
-<div class="ui vertical segment black-shine-gradient">
-  <div class="ui stackable page grid">
-    <div class="row">
-      <div class="eight wide column">
-        <h3 class="ui inverted header">OpenTheme Helps Re-Imagine Web Design</h3> 
-        <h4 class="ui inverted header">
-        Design a website that <a href="/metrics/">self monitors</a> as it changes!
-        </h4>
-        <h4 class="slim-header-light">
-        Create <a href="/apps/">mobile hybrid apps</a> in just 3 lines of code!
-        </h4>
-        <h4 class="ui inverted header">
-        Author real-time content using <a href="/embeds/">plugin embeds</a>.
-        </h4>
-        <h4 class="slim-header-light">
-        Manage content <a href="{% post_url /blog/2014-11-26-open-cloud-based-workflow-for-designing-your-website %}">100% on Cloud, in Browser</a>.
-        </h4>
-        <h4 class="ui inverted header">
-        Publish <a href="{% post_url /blog/2014-12-2-data-driven-web-apps-using-github %}">data driven docs</a>, without a database.
-        </h4>
-      </div>
-      <div class="eight wide column">
-        {% include feature-post.html %}        
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="ui feature vertical segment">
-  <div class="ui centered page grid">
-    <div class="fourteen wide column">
-      <div class="ui three column center aligned stackable divided grid">
-        <div class="column">
-          <div class="ui icon header">
-            <i class="purple mobile icon"></i>
-            Hybrid Apps
-          </div>
-          <p>Responsive theme supporting multiple devices with one code base. Design once, publish anywhere.</p>
-        </div>
-        <div class="column">
-          <div class="ui icon header">
-            <i class="purple bug icon"></i>
-            Live Tests
-          </div>
-          <p>Travis CI integrated. BrowserSync ready. Lint JS, CSS on build. HTML proofing planned.</p>
-        </div>
-        <div class="column">
-          <div class="ui icon header">
-            <i class="purple rocket icon"></i>
-            Speed Optimized
-          </div>
-          <p>PageSpeed Insights built-in. Images optimized in build. CSS, JS minified. Selective JS includes.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="ui inverted vertical segment">
-  <div class="ui centered page grid">
-    <div class="fourteen wide column">
-      <div class="ui five column center aligned stackable inverted divided grid">
-        <div class="column">
-          <a class="ui small blue inverted statistic" href="/apps/">
-            <div class="value">
-              <i class="cube icon"></i> {{ site.categories.app | size  }}
-            </div>
-            <p class="label">
-              Single Page Apps
-            </p>
-          </a>
-        </div>
-        <div class="column">
-          <a class="ui small purple inverted statistic pagebar" href="#">
-            <div class="value">
-              <i class="content icon"></i> {{ site.pages | size  }}
-            </div>
-            <div class="label">
-              Templates
-            </div>
-          </a>
-        </div>
-        <div class="column">
-          <a class="ui small blue inverted statistic" href="/embeds/">
-            <div class=" value">
-              <i class="wizard icon"></i> {{ site.data.embeds | size }}
-            </div>
-            <div class="label">
-              Reusable Embeds
-            </div>
-          </a>
-        </div>
-        <div class="column">
-          <a class="ui small orange inverted statistic" href="{% post_url /blog/2014-12-15-content-strategy-for-startup-websites %}">
-            <div class="text value">
-              One Minute
-            </div>
-            <div class="label">
-              Content Workflow
-            </div>
-          </a>
-        </div>
-        <div class="column">
-          <a class="ui small blue inverted statistic" href="/category/#theme">
-            <div class="value">
-              <i class="student icon"></i> {{ site.categories.theme | size  }}
-            </div>
-            <div class="label">
-              Theme Tutorials
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="ui vertical segment">
-  <div class="ui centered page stackable divided grid">
-    <div class="row">
-      <div class="column">
-        <h1 class="center aligned ui header">
-          Browse OpenTheme Content
-        </h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="eight wide column">
-
-        <h3 class="ui header">Tags</h3>
-          {% include site-tags.html %}
-
-      </div>
-
-      <div class="eight wide column">
-
-        <h3 class="ui header">Categories</h3>
-          {% include site-categories.html %}
-
-      </div>
-
-    </div> <!-- /row -->
-  </div>
-</div>
-
+<div class="pagination">
+  {% if paginator.previous_page %}
+    {% if paginator.previous_page == 1 %}
+      <a href="{{ site.url }}" class="btn">Previous</a>
+    {% else %}
+      <a href="{{ site.url }}/page{{ paginator.previous_page }}" class="btn">Previous</a>
+    {% endif %}
+  {% else %}
+    Previous
+  {% endif %}
+  <ul class="inline-list">
+    <li>
+      {% if paginator.page == 1 %}
+        <span class="current-page">1</span>
+      {% else %}
+        <a href="{{ site.url }}">1</a>
+      {% endif %}
+    </li>
+    {% for count in (2..paginator.total_pages) %}
+      <li>
+        {% if count == paginator.page %}
+          <span class="current-page">{{ count }}</span>
+        {% else %}
+          <a href="{{ site.url }}/page{{ count }}">{{ count }}</a>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+  {% if paginator.next_page %}
+    <a href="{{ site.url }}/page{{ paginator.next_page }}" class="btn">Next</a>
+  {% else %}
+    Next
+  {% endif %}
+</div><!-- /.pagination -->
