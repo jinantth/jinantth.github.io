@@ -1,5 +1,5 @@
-title:						"天天好健康食品"
-description:			"济南 天天好 健康食品 天天好健康食品 阿胶 福牌阿胶 放心产品"
+title:            "天天好健康食品"
+description:      "济南 天天好 健康食品 天天好健康食品 阿胶 福牌阿胶 放心产品"
 disqus_shortname: hpstrtheme
 reading_time:     true
 words_per_minute: 200
@@ -12,7 +12,7 @@ owner:
   name:           "天天好健康食品"
   avatar:         avatar.jpg
   bio:            "在这样一个充满欺骗的社会里，只有一颗实实在在的心，才能做出最好的产品！"
-  email:         jinantth@163.com
+  email:          jinantth@163.com
   # Social networking links used in footer. Update and remove as you like.
   twitter:        
   facebook:       
